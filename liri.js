@@ -4,13 +4,19 @@ require("dotenv").config();
 var axios = require("axios");
 var request = require("request");
 var moment = require("moment");
+// Require data from File System npm package
 var fs = require("fs");
+// Requiring spotify function from spotify-api
 var spotify = require("node-spotify-api");
+// Import the `keys.js` file
 var keys = require("./keys.js");
 const { listenerCount } = require("process");
+//Access to keys information
 var spotifyKeys = new spotify(keys.spotify);
 
+// Obtain first input after node liri.js to determine the command
 var command = process.argv[2]
+// Obtain the second input that follows the command to determine what we are querying
 var commandTwo = process.argv[3];
 
 function concertThis(artist) {
@@ -105,7 +111,7 @@ function done() {
 }
 
 
-
+//Wodnering if I should do a swtich case here instead. Probably much less code.
 if (command === "concert-this") {
     concertThis(commadTwo);
 } else if (command === "spotify-this-song") {

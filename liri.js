@@ -58,6 +58,30 @@ function spotifyThisSong(songName) {
       });  
 }
 function movieThis(movieName) {
+    if (movieName === undefined) {
+        movieName = "Mr. Nobody";
+      }
+      axios
+        .get(
+          encodeURI(
+            "http://www.omdbapi.com/?t=" +
+              movieName.trim() +
+              "&y=&plot=short&apikey=trilogy"
+          )
+        )
+        .then(function(response) {
+          console.log("Movie Title: " + response.data.Title);
+          console.log("Movie Year: " + response.data.Year);
+          console.log("Movie Rating via IMDB: " + response.data.imdbRating);
+          console.log(
+            "Movie Rating via Rotten Tomatoes: " + response.data.Ratings[1].Value
+          );
+          console.log("Movie Production Country: " + response.data.Country);
+          console.log("Movie Language: " + response.data.Language);
+          console.log("Movie Plot: " + response.data.Plot);
+          console.log("Actors: " + response.data.Actors);
+        })
+        .catch(err => console.error(err));
 }
 function done() {
     fs.readFile("random.txt", "utf8", function(error, data) {
@@ -69,8 +93,15 @@ function done() {
     var dataArr = data.split(",");
     console.log(dataArr);
     if (dataArr[0] === "spotify-this-song") {
-
+        spotifyThisSong(dataArr[1]);
     }
+    if (dataArr[0] === "concert-this") {
+      concertThis(dataArr[1]);
+    }
+    if (dataArr[0] === "movie-this") {
+      movieThis(dataArr[1]);
+    }
+  });
 }
 
 

@@ -14,9 +14,9 @@ const { listenerCount } = require("process");
 //Access to keys information
 var spotifyKeys = new spotify(keys.spotify);
 
-// Obtain first input after node liri.js to determine the command
+// First input after node liri.js to determine the command
 var command = process.argv[2]
-// Obtain the second input that follows the command to determine what we are querying
+// Second input that follows the command to determine what we are querying
 var commandTwo = process.argv[3];
 
 function concertThis(artist) {

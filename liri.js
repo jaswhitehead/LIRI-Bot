@@ -20,27 +20,29 @@ var command = process.argv[2]
 var commandTwo = process.argv[3];
 
 function concertThis(artist) {
-    console.log("artist", artist);
-    var uri = encodeURI("https://rest.bandsintwon.com/artists/" + artist + "/events?app_id=LIRIBot");
-    requestAnimationFrame(uri, function(err, response, body) {
-    });
-    request(uri, function(err, response, body) {
-        console.log("body: ", body, ".");
-        if (err) {
-          return console.log("Error occurred: " + err);
-        }
-        var bandInput = JSON.parse(body);
-        if (bandInput.length > 0) {
-          for (i = 0; i < 1; i++) {
-            console.log(`Venue: ${bandInput[i].venue.name}`);
-            console.log(`Venue Location via City: ${bandInput[i].venue.city}`);
-            console.log(
-              `Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")}`
-            );
-          }
-        }
-      });
+  console.log("artist", artist);
+  var preview_url = encodeURI(
+    "https://rest.bandsintown.com/artists/" +
+      artist +
+      "/events?app_id=codingbootcamp"
+  );
+  request(url, function(err, response, body) {
+    console.log("body: ", body, ".");
+    if (err) {
+      return console.log("Error occurred: " + err);
     }
+    var bandInput = JSON.parse(body);
+    if (bandInput.length > 0) {
+      for (i = 0; i < 1; i++) {
+        console.log(`Venue: ${bandInput[i].venue.name}`);
+        console.log(`Venue Location via City: ${bandInput[i].venue.city}`);
+        console.log(`Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")}`
+        );
+      }
+    }
+  });
+}
+
 function spotifyThisSong(songName) {
     if (songName === undefined) {
         songName = "The Sign Ace of Base";
@@ -56,6 +58,7 @@ function spotifyThisSong(songName) {
         }
         for (i = 0; i < songsInfo.length; i++) {
           // console.log(songsInfo);
+          console.log('========================================================= \n');
           console.log(`Artist: ${songsInfo[i].artists[0].name}`);
           console.log(`Song Name: ${songsInfo[i].name}`);
           console.log(`Preview Link: ${songsInfo[i].preview_url}`);
@@ -63,6 +66,7 @@ function spotifyThisSong(songName) {
         }
       });  
 }
+
 function movieThis(movieName) {
     if (movieName === undefined) {
         movieName = "Mr. Nobody";
@@ -76,16 +80,16 @@ function movieThis(movieName) {
           )
         )
         .then(function(response) {
+          console.log('=========================================================');
           console.log("Movie Title: " + response.data.Title);
           console.log("Movie Year: " + response.data.Year);
           console.log("Movie Rating via IMDB: " + response.data.imdbRating);
-          console.log(
-            "Movie Rating via Rotten Tomatoes: " + response.data.Ratings[1].Value
-          );
+          console.log("Movie Rating via Rotten Tomatoes: " + response.data.Ratings[1].Value);
           console.log("Movie Production Country: " + response.data.Country);
           console.log("Movie Language: " + response.data.Language);
           console.log("Movie Plot: " + response.data.Plot);
           console.log("Actors: " + response.data.Actors);
+          console.log('========================================================= \n');
         })
         .catch(err => console.error(err));
 }

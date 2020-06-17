@@ -34,9 +34,12 @@ function concertThis(artist) {
     var bandInput = JSON.parse(body);
     if (bandInput.length > 0) {
       for (i = 0; i < 1; i++) {
+        console.log('=========================================================');
         console.log(`Venue: ${bandInput[i].venue.name}`);
         console.log(`Venue Location via City: ${bandInput[i].venue.city}`);
-        console.log(`Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")}`
+        console.log(`Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")
+      }`
+        
         );
       }
     }
@@ -58,11 +61,12 @@ function spotifyThisSong(songName) {
         }
         for (i = 0; i < songsInfo.length; i++) {
           // console.log(songsInfo);
-          console.log('========================================================= \n');
+          console.log('=========================================================');
           console.log(`Artist: ${songsInfo[i].artists[0].name}`);
           console.log(`Song Name: ${songsInfo[i].name}`);
           console.log(`Preview Link: ${songsInfo[i].preview_url}`);
           console.log(`Album: ${songsInfo[i].album.name}`);
+          console.log('========================================================= \n');
         }
       });  
 }

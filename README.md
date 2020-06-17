@@ -94,11 +94,17 @@ Javascript
 NodeJS
 
 Node packages:
+
 •Axios
+
 •Moment
+
 •DotEnv
 
 APIs used:
+
 •Bands in Town
+
 •Node-Spotify-API
+
 •OMDB

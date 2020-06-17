@@ -93,7 +93,7 @@ This would call the spotify-this-song function and pass in "I Want it That Way" 
 Javascript
 NodeJS
 
-Node packages:
+<u>Node packages:</u>
 
 •Axios
 
@@ -101,7 +101,7 @@ Node packages:
 
 •DotEnv
 
-APIs used:
+<u>APIs used:</u>
 
 •Bands in Town
 

@@ -16,7 +16,7 @@ DotEnv
 
 Create a .env file in the same directory as the rest of the files. In the .env file should be:
 
-'# Spotify API keys'
+# Spotify API keys
 
 'SPOTIFY_ID=your-spotify-ID-here'
 
@@ -31,7 +31,7 @@ movie-this
 
 do-what-it-says
 
-Command: concert-this
+# Command: concert-this
 $ node liri.js concert-this (band name)
 
 Using the Bands In Town API, this will show the following information about the first three events the user searches for:
@@ -42,7 +42,7 @@ Using the Bands In Town API, this will show the following information about the 
 
 •Date of the Event
 
-Command: spotify-this-song
+# Command: spotify-this-song
 $ node liri.js spotify-this-song (song name)
 
 Using the Spotify API, this will show the following information about the song the user searches for:
@@ -56,7 +56,7 @@ Using the Spotify API, this will show the following information about the song t
 •Song Preview Link
 If no song is provided, the song "The Sign" will be pulled up instead.
 
-Command: movie-this
+# Command: movie-this
 $ node liri.js movie-this (movie name)
 
 Using the OMBD API, this will show the following information about the movie the user searches for:
@@ -77,3 +77,28 @@ Using the OMBD API, this will show the following information about the movie the
 
 •Actors in the Movie
 If no movie is provided, the movie "Mr. Nobody." will be pulled up instead.
+
+# Command: do-what-it-says
+$ node liri.js do-what-it-says
+
+The program will take the text inside of random.txt and use it to call the first command with the second part as it's parameter.
+
+Currently in random.txt, the following text is there:
+
+spotify-this-song I Want It That Way
+
+This would call the spotify-this-song function and pass in "I Want it That Way" as the song.
+
+# Technologies Used
+Javascript
+NodeJS
+
+Node packages:
+•Axios
+•Moment
+•DotEnv
+
+APIs used:
+•Bands in Town
+•Node-Spotify-API
+•OMDB

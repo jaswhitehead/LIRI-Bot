@@ -1,10 +1,14 @@
 require("dotenv").config();
 
 // Set up variables to import packages for application functionality
+
+//Grab the axios ackage
 var axios = require("axios");
+
 var request = require("request");
 var moment = require("moment");
-// Require data from File System npm package
+
+//Grab the random.txt file
 var fs = require("fs");
 // Requiring spotify function from spotify-api
 var spotify = require("node-spotify-api");
@@ -17,7 +21,8 @@ var spotifyKeys = new spotify(keys.spotify);
 // First input after node liri.js to determine the command
 var command = process.argv[2]
 // Second input that follows the command to determine what we are querying
-var commandTwo = process.argv[3];
+var input = process.argv[3];
+console.log(command, input);
 
 function concertThis(artist) {
   console.log("artist", artist);
@@ -37,8 +42,7 @@ function concertThis(artist) {
         console.log('=========================================================');
         console.log(`Venue: ${bandInput[i].venue.name}`);
         console.log(`Venue Location via City: ${bandInput[i].venue.city}`);
-        console.log(`Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")
-      }`
+        console.log(`Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")}`
         
         );
       }
@@ -121,11 +125,11 @@ function done() {
 
 //Wodnering if I should do a swtich case here instead. Probably much less code.
 if (command === "concert-this") {
-    concertThis(commadTwo);
+    concertThis(input);
 } else if (command === "spotify-this-song") {
-    spotifyThisSong(commandTwo);
+    spotifyThisSong(input);
 } else if (command === "movie-this") {
-    movieThis(commandTwo);
+    movieThis(input);
 } else if (command === "do-what-it-says") {
     done();
 } else {

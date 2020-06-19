@@ -2,19 +2,23 @@ require("dotenv").config();
 
 // Set up variables to import packages for application functionality
 
-//Grab the axios ackage
+//Grab the axios package
 var axios = require("axios");
 
-var request = require("request");
+//Grab the moment package
 var moment = require("moment");
 
 //Grab the random.txt file
 var fs = require("fs");
+
 // Requiring spotify function from spotify-api
 var spotify = require("node-spotify-api");
+
 // Import the `keys.js` file
 var keys = require("./keys.js");
+
 const { listenerCount } = require("process");
+
 //Access to keys information
 var spotifyKeys = new spotify(keys.spotify);
 
@@ -123,7 +127,7 @@ function done() {
 }
 
 
-//Wodnering if I should do a swtich case here instead. Probably much less code.
+//Wondering if I should use a switch case here instead.
 if (command === "concert-this") {
     concertThis(input);
 } else if (command === "spotify-this-song") {
@@ -135,3 +139,11 @@ if (command === "concert-this") {
 } else {
     console.log("invalid command");
 }
+
+
+// Is this how you would do something like that?
+//switch (command) {
+//    case 'concert-this':
+//    concertThis(input);
+//    break;
+//}

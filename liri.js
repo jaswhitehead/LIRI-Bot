@@ -30,12 +30,12 @@ console.log(command, input);
 
 function concertThis(artist) {
   console.log("artist", artist);
-  var preview_url = encodeURI(
+  var query_url = encodeURI(
     "https://rest.bandsintown.com/artists/" +
       artist +
       "/events?app_id=codingbootcamp"
   );
-  request(url, function(err, response, body) {
+  axios(query_url, function(err, response, body) {
     console.log("body: ", body, ".");
     if (err) {
       return console.log("Error occurred: " + err);
@@ -58,7 +58,7 @@ function spotifyThisSong(songName) {
     if (songName === undefined) {
         songName = "The Sign Ace of Base";
       }
-      spotify.search({ type: "track", query: songName, limit: 1 }, function(
+      spotifyKeys.search({ type: "track", query: songName, limit: 5 }, function(
         err,
         data
       ) {
@@ -144,6 +144,10 @@ if (command === "concert-this") {
 // Is this how you would do something like that?
 //switch (command) {
 //    case 'concert-this':
-//    concertThis(input);
-//    break;
+  //    concertThis(input);
+  //    break;
+  //    case "spotify-this-song"
+  //      spotifyThisSong(input);
+  //      break;
+  //    default:
 //}

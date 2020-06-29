@@ -30,61 +30,78 @@ var input = process.argv[3];
 
 
 //You could also use a switch case here instead if you prefer.
-if (command === "concert-this") {
-  concertThis(input);
-} else if (command === "spotify-this-song") {
-  spotifyThisSong(input);
-} else if (command === "movie-this") {
-  movieThis(input);
-} else if (command === "do-what-it-says") {
-  done();
-} else {
-  console.log("invalid command");
-}
+// if (command === "concert-this") {
+//   concertThis(input);
+// } else if (command === "spotify-this-song") {
+//   spotifyThisSong(input);
+// } else if (command === "movie-this") {
+//   movieThis(input);
+// } else if (command === "do-what-it-says") {
+//   done();
+// } else {
+//   console.log("invalid command");
+// }
 
 // Or you could do a switch case if you prefer.
-//   switch (command) {
-//       case 'concert-this':
-//         concertThis(input);
-//         break;
-//       case 'spotify-this-song'
-//         spotifyThisSong(input);
-//         break;
-//       case 'movie-this';
-//         movieThis(input);
-//         break;
-//       case 'do-what-it-says';
-//         doWhatItSays(input);
-//         break;        
-// default:
-//  } 
+  switch (command) {
+      case 'concert-this':
+        concertThis(input);
+        break;
+      case 'spotify-this-song':
+        spotifyThisSong(input);
+        break;
+      case 'movie-this':
+        movieThis(input);
+        break;
+      case "do-what-it-says":
+        done(input);
+        break; 
 
-function concertThis(artistName) {
-  if (artistName === undefined) {
-    artist = "Tool";
+      default:
+       console.warn(`Unable to find the command ${command}`.red);
+      return;
   }
 
-  var uri = encodeURI("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp");
-  
-  request(uri, function(err, response, body) {
-    console.log("body: ", body, ".");
-    if (err) {
-      return console.log("Error occurred: " + err);
-    }
 
-    var bandInput = JSON.parse(body);
-    if (bandInput.length > 0) {
-      for (i = 0; i < 1; i++) {
-        console.log('=========================================================');
-        console.log(`Venue: ${bandInput[i].venue.name}`);
-        console.log(`Venue Location City: ${bandInput[i].venue.city}`);
-        console.log(`Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")}`
-        
-        );
-      }
-    }
-  });
+function concertThis() {
+  axios
+      .get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp")
+      .then(function (response) {
+          console.log("Venue Name: " + response.data[0].venue.name);
+          console.log("Venue Location: " + response.data[0].venue.city + ", " + response.data[0].venue.country);
+          console.log("Time of Event: " + moment(response.data[0].venue.datetime).format("MM/DD/YYYY"));
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
 }
+
+// function concertThis(artistName) {
+//   if (artistName === undefined) {
+//     artist = "Tool";
+//   }
+
+//   var uri = encodeURI("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp");
+  
+//   request(uri, function(err, response, body) {
+//     console.log("body: ", body, ".");
+//     if (err) {
+//       return console.log("Error occurred: " + err);
+//     }
+
+//     var bandInput = JSON.parse(body);
+//     if (bandInput.length > 0) {
+//       for (i = 0; i < 1; i++) {
+//         console.log('=========================================================');
+//         console.log(`Venue: ${bandInput[i].venue.name}`);
+//         console.log(`Venue Location City: ${bandInput[i].venue.city}`);
+//         console.log(`Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")}`
+        
+//         );
+//       }
+//     }
+//   });
+// }
 
 function spotifyThisSong(songName) {
     if (songName === undefined) {

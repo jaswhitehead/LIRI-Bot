@@ -5,6 +5,9 @@ require("dotenv").config();
 //Grab the axios package
 var axios = require("axios");
 
+//Grab the reqquest package
+var request = require("request");
+
 //Grab the moment package
 var moment = require("moment");
 
@@ -17,8 +20,6 @@ var spotify = require("node-spotify-api");
 // Import the `keys.js` file
 var keys = require("./keys.js");
 
-const { listenerCount } = require("process");
-
 //Access to keys information
 var spotifyKeys = new spotify(keys.spotify);
 
@@ -26,26 +27,57 @@ var spotifyKeys = new spotify(keys.spotify);
 var command = process.argv[2]
 // Second input that follows the command to determine what we are querying
 var input = process.argv[3];
-console.log(command, input);
 
-function concertThis(artist) {
-  console.log("artist", artist);
-  var query_url = encodeURI(
-    "https://rest.bandsintown.com/artists/" +
-      artist +
-      "/events?app_id=codingbootcamp"
-  );
-  axios(query_url, function(err, response, body) {
+
+//You could also use a switch case here instead if you prefer.
+if (command === "concert-this") {
+  concertThis(input);
+} else if (command === "spotify-this-song") {
+  spotifyThisSong(input);
+} else if (command === "movie-this") {
+  movieThis(input);
+} else if (command === "do-what-it-says") {
+  done();
+} else {
+  console.log("invalid command");
+}
+
+// Or you could do a switch case if you prefer.
+//   switch (command) {
+//       case 'concert-this':
+//         concertThis(input);
+//         break;
+//       case 'spotify-this-song'
+//         spotifyThisSong(input);
+//         break;
+//       case 'movie-this';
+//         movieThis(input);
+//         break;
+//       case 'do-what-it-says';
+//         doWhatItSays(input);
+//         break;        
+// default:
+//  } 
+
+function concertThis(artistName) {
+  if (artistName === undefined) {
+    artist = "Tool";
+  }
+
+  var uri = encodeURI("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp");
+  
+  request(uri, function(err, response, body) {
     console.log("body: ", body, ".");
     if (err) {
       return console.log("Error occurred: " + err);
     }
+
     var bandInput = JSON.parse(body);
     if (bandInput.length > 0) {
       for (i = 0; i < 1; i++) {
         console.log('=========================================================');
         console.log(`Venue: ${bandInput[i].venue.name}`);
-        console.log(`Venue Location via City: ${bandInput[i].venue.city}`);
+        console.log(`Venue Location City: ${bandInput[i].venue.city}`);
         console.log(`Event Date/Time: ${moment(bandInput[i].datetime).format("MM/DD/YYYY hh:00 A")}`
         
         );
@@ -58,7 +90,7 @@ function spotifyThisSong(songName) {
     if (songName === undefined) {
         songName = "The Sign Ace of Base";
       }
-      spotifyKeys.search({ type: "track", query: songName, limit: 5 }, function(
+      spotifyKeys.search({ type: "track", query: songName.trim(), limit: 3 }, function(
         err,
         data
       ) {
@@ -76,20 +108,20 @@ function spotifyThisSong(songName) {
           console.log(`Album: ${songsInfo[i].album.name}`);
           console.log('========================================================= \n');
         }
-      });  
+  // Attempt at getting the log file to work.
+  //   fs.appendFile("log.txt", songsInfo, function (err) {
+  //     if (err) throw err;
+  //   });
+  });  
 }
 
 function movieThis(movieName) {
     if (movieName === undefined) {
-        movieName = "Mr. Nobody";
+        movieName = "Shawshank Redemption";
       }
       axios
         .get(
-          encodeURI(
-            "http://www.omdbapi.com/?t=" +
-              movieName.trim() +
-              "&y=&plot=short&apikey=trilogy"
-          )
+          encodeURI("http://www.omdbapi.com/?t=" + movieName.trim() + "&y=&plot=short&apikey=trilogy")
         )
         .then(function(response) {
           console.log('=========================================================');
@@ -110,9 +142,10 @@ function done() {
         if (error) {
             return console.log(error);
     }
-    // Print the contents of the data
-    console.log(data);
-    var dataArr = data.split(",");
+
+
+//   Print the contents of the data
+  var dataArr = data.split(",");
     console.log(dataArr);
     if (dataArr[0] === "spotify-this-song") {
         spotifyThisSong(dataArr[1]);
@@ -127,27 +160,3 @@ function done() {
 }
 
 
-//Wondering if I should use a switch case here instead.
-if (command === "concert-this") {
-    concertThis(input);
-} else if (command === "spotify-this-song") {
-    spotifyThisSong(input);
-} else if (command === "movie-this") {
-    movieThis(input);
-} else if (command === "do-what-it-says") {
-    done();
-} else {
-    console.log("invalid command");
-}
-
-
-// Is this how you would do something like that?
-//switch (command) {
-//    case 'concert-this':
-  //    concertThis(input);
-  //    break;
-  //    case "spotify-this-song"
-  //      spotifyThisSong(input);
-  //      break;
-  //    default:
-//}
